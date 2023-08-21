@@ -22,13 +22,22 @@ export class LoginInput {
 }
 
 @InputType()
+export class ChangePasswordInput {
+  @Field()
+  oldPassword: string;
+
+  @Field()
+  newPassword: string;
+}
+
+@InputType()
 export class ForgotPasswordInput {
   @Field()
   email: string;
 }
 
 @InputType()
-export class ChangePasswordInput {
+export class ChangePasswordWhenForgotInput {
   @Field()
   userId: string;
 

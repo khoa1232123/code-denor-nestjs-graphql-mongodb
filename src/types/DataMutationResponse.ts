@@ -1,7 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { MutationResponse } from './MutationResponse';
-import { FieldError } from './FieldError';
 import { User } from 'src/user/user.entity';
+import { MutationResponse } from './MutationResponse';
 
 @ObjectType({ implements: MutationResponse })
 export class DataMutationResponse extends MutationResponse {
@@ -16,7 +15,4 @@ export class DataMutationResponse extends MutationResponse {
 
   @Field({ nullable: true })
   user?: User;
-
-  @Field((_type) => [FieldError], { nullable: true })
-  errors?: FieldError[];
 }

@@ -17,7 +17,7 @@ export class User extends BaseEntity {
 
   @Field((_type) => ID)
   @PrimaryGeneratedColumn()
-  id!: number;
+  id!: string;
 
   @Field()
   @Column({ unique: true })

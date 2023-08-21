@@ -1336,6 +1336,17 @@
   resolved "https://registry.npmjs.org/@tsconfig/node16/-/node16-1.0.4.tgz"
   integrity sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==
 
+"@typegoose/typegoose@^11.4.1":
+  version "11.4.1"
+  resolved "https://registry.npmjs.org/@typegoose/typegoose/-/typegoose-11.4.1.tgz"
+  integrity sha512-mOMEUBaxnSYtnGWAMsduh1+4MeJHpYN2+rhZ5rHq9mKRT8Ix3nsR0QWEnFIIqTnksL0Yt3Ww7Qj8IFzWhoIyoQ==
+  dependencies:
+    lodash "^4.17.20"
+    loglevel "^1.8.1"
+    reflect-metadata "^0.1.13"
+    semver "^7.5.4"
+    tslib "^2.6.0"
+
 "@types/accepts@^1.3.5":
   version "1.3.5"
   resolved "https://registry.npmjs.org/@types/accepts/-/accepts-1.3.5.tgz"
@@ -1547,6 +1558,13 @@
   resolved "https://registry.npmjs.org/@types/node/-/node-10.17.60.tgz"
   integrity sha512-F0KIgDJfy2nA3zMLmWGKxcH2ZVEtCZXHHdOQs2gSaQ27+lNeEfGxzkIw90aXswATX7AZ33tahPbzy6KAfUreVw==
 
+"@types/nodemailer@^6.4.9":
+  version "6.4.9"
+  resolved "https://registry.npmjs.org/@types/nodemailer/-/nodemailer-6.4.9.tgz"
+  integrity sha512-XYG8Gv+sHjaOtUpiuytahMy2mM3rectgroNbs6R3djZEKmPNiIJwe9KqOJBGzKKnNZNKvnuvmugBgpq3w/S0ig==
+  dependencies:
+    "@types/node" "*"
+
 "@types/parse-json@^4.0.0":
   version "4.0.0"
   resolved "https://registry.npmjs.org/@types/parse-json/-/parse-json-4.0.0.tgz"
@@ -1610,6 +1628,11 @@
   integrity sha512-X3HPWTwXRerBZS7Mo1k6vMVR1Z6zmJcDVn5O/31whe0tnjE4te6ZJSJGq1RiqHPjzPdMTfjCFogDJmwng9xHaQ==
   dependencies:
     "@types/superagent" "*"
+
+"@types/uuid@^9.0.2":
+  version "9.0.2"
+  resolved "https://registry.npmjs.org/@types/uuid/-/uuid-9.0.2.tgz"
+  integrity sha512-kNnC1GFBLuhImSnV7w4njQkUiJi0ZXUycu1rUaouPqiKlXkh77JKgdRnTAp1x5eBwcIwbtI+3otwzuIDEuDoxQ==
 
 "@types/validator@^13.7.10":
   version "13.11.1"
@@ -2779,7 +2802,7 @@ date-fns@^2.29.3:
   dependencies:
     "@babel/runtime" "^7.21.0"
 
-debug@^4.1.0, debug@^4.1.1, debug@^4.3.2, debug@^4.3.4, debug@4:
+debug@^4.1.0, debug@^4.1.1, debug@^4.3.2, debug@^4.3.4, debug@4, debug@4.x:
   version "4.3.4"
   resolved "https://registry.npmjs.org/debug/-/debug-4.3.4.tgz"
   integrity sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==
@@ -4417,6 +4440,11 @@ jsonfile@^6.0.1:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
+kareem@2.5.1:
+  version "2.5.1"
+  resolved "https://registry.npmjs.org/kareem/-/kareem-2.5.1.tgz"
+  integrity sha512-7jFxRVm+jD+rkq3kY0iZDJfsO2/t4BBPeEb2qKn2lR/9KhuksYk5hxzfRYWMPV8P/x2d0kHD306YyWLzjjH+uA==
+
 kleur@^3.0.3:
   version "3.0.3"
   resolved "https://registry.npmjs.org/kleur/-/kleur-3.0.3.tgz"
@@ -4484,7 +4512,7 @@ lodash.sortby@^4.7.0:
   resolved "https://registry.npmjs.org/lodash.sortby/-/lodash.sortby-4.7.0.tgz"
   integrity sha512-HDWXG8isMntAyRF5vZ7xKuEvOhT4AhlRt/3czTSjvGUxjYCBVRQY48ViDHyfYz9VIoBkW4TMGQNapx+l3RUwdA==
 
-lodash@^4.17.21, lodash@4.17.21:
+lodash@^4.17.20, lodash@^4.17.21, lodash@4.17.21:
   version "4.17.21"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -4497,7 +4525,7 @@ log-symbols@^4.1.0:
     chalk "^4.1.0"
     is-unicode-supported "^0.1.0"
 
-loglevel@^1.6.8:
+loglevel@^1.6.8, loglevel@^1.8.1:
   version "1.8.1"
   resolved "https://registry.npmjs.org/loglevel/-/loglevel-1.8.1.tgz"
   integrity sha512-tCRIJM51SHjAayKwC+QAg8hT8vg6z7GSgLJKGvzuPb1Wc+hLzqtuVLxp6/HzSPOozuK+8ErAhy7U/sVzw8Dgfg==
@@ -4746,7 +4774,7 @@ mongodb-connection-string-url@^2.6.0:
     "@types/whatwg-url" "^8.2.1"
     whatwg-url "^11.0.0"
 
-mongodb@*, mongodb@^5.2.0, mongodb@^5.7.0:
+mongodb@*, mongodb@^5.2.0, mongodb@^5.7.0, mongodb@5.7.0:
   version "5.7.0"
   resolved "https://registry.npmjs.org/mongodb/-/mongodb-5.7.0.tgz"
   integrity sha512-zm82Bq33QbqtxDf58fLWBwTjARK3NSvKYjyz997KSy6hpat0prjeX/kxjbPVyZY60XYPDNETaHkHJI2UCzSLuw==
@@ -4756,6 +4784,31 @@ mongodb@*, mongodb@^5.2.0, mongodb@^5.7.0:
     socks "^2.7.1"
   optionalDependencies:
     saslprep "^1.0.3"
+
+mongoose@^7.4.3, mongoose@~7.4.0:
+  version "7.4.3"
+  resolved "https://registry.npmjs.org/mongoose/-/mongoose-7.4.3.tgz"
+  integrity sha512-eok0lW6mZJHK2vVSWyJb9tUfPMUuRF3h7YC4pU2K2/YSZBlNDUwvKsHgftMOANbokP2Ry+4ylvzAdW4KjkRFjw==
+  dependencies:
+    bson "^5.4.0"
+    kareem "2.5.1"
+    mongodb "5.7.0"
+    mpath "0.9.0"
+    mquery "5.0.0"
+    ms "2.1.3"
+    sift "16.0.1"
+
+mpath@0.9.0:
+  version "0.9.0"
+  resolved "https://registry.npmjs.org/mpath/-/mpath-0.9.0.tgz"
+  integrity sha512-ikJRQTk8hw5DEoFVxHG1Gn9T/xcjtdnOKIU1JTmGjZZlg9LST2mBLmcX3/ICIbgJydT2GOc15RnNy5mHmzfSew==
+
+mquery@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.npmjs.org/mquery/-/mquery-5.0.0.tgz"
+  integrity sha512-iQMncpmEK8R8ncT8HJGsGc9Dsp8xcgYMVSbs5jgnm1lFHTZqMJTUWTDx1LBO8+mK3tPNZWFLBghQEIOULSTHZg==
+  dependencies:
+    debug "4.x"
 
 ms@2.0.0:
   version "2.0.0"
@@ -4847,6 +4900,11 @@ node-releases@^2.0.13:
   version "2.0.13"
   resolved "https://registry.npmjs.org/node-releases/-/node-releases-2.0.13.tgz"
   integrity sha512-uYr7J37ae/ORWdZeQ1xxMJe3NtdmqMC/JZK+geofDrkLUApKRHPd18/TxtBOJ4A0/+uUIliorNrfYV6s1b02eQ==
+
+nodemailer@^6.9.4:
+  version "6.9.4"
+  resolved "https://registry.npmjs.org/nodemailer/-/nodemailer-6.9.4.tgz"
+  integrity sha512-CXjQvrQZV4+6X5wP6ZIgdehJamI63MFoYFGGPtHudWym9qaEHDNdPzaj5bfMCvxG1vhAileSWW90q7nL0N36mA==
 
 nopt@^5.0.0:
   version "5.0.0"
@@ -5594,6 +5652,11 @@ side-channel@^1.0.4:
     call-bind "^1.0.0"
     get-intrinsic "^1.0.2"
     object-inspect "^1.9.0"
+
+sift@16.0.1:
+  version "16.0.1"
+  resolved "https://registry.npmjs.org/sift/-/sift-16.0.1.tgz"
+  integrity sha512-Wv6BjQ5zbhW7VFefWusVP33T/EM0vYikCaQ2qR8yULbsilAT8/wQaXvuQ3ptGLpoKx+lihJE3y2UTgKDyyNHZQ==
 
 signal-exit@^3.0.0, signal-exit@^3.0.2, signal-exit@^3.0.3, signal-exit@^3.0.7:
   version "3.0.7"
