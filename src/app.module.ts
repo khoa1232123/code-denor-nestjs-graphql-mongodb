@@ -7,6 +7,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Lesson } from './lesson/lesson.entity';
 import { StudentModule } from './student/student.module';
 import { Student } from './student/student.entity';
+import { UserModule } from './user/user.module';
+import { User } from './user/user.entity';
 
 @Module({
   imports: [
@@ -15,7 +17,7 @@ import { Student } from './student/student.entity';
       url: 'mongodb+srv://khoa1232123:khoa1232123@cluster0.vyqb5dn.mongodb.net/learn-nestjs-api?retryWrites=true&w=majority',
       synchronize: true,
       useUnifiedTopology: true,
-      entities: [Lesson, Student],
+      entities: [Lesson, Student, User],
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       autoSchemaFile: true,
@@ -25,6 +27,7 @@ import { Student } from './student/student.entity';
     }),
     LessonModule,
     StudentModule,
+    UserModule,
   ],
 })
 export class AppModule {}
