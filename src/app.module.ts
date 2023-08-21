@@ -2,13 +2,15 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { LessonModule } from './lesson/lesson.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Lesson } from './lesson/lesson.entity';
-import { StudentModule } from './student/student.module';
+import { LessonModule } from './lesson/lesson.module';
+import { Post } from './post/post.entity';
+import { PostModule } from './post/post.module';
 import { Student } from './student/student.entity';
-import { UserModule } from './user/user.module';
+import { StudentModule } from './student/student.module';
 import { User } from './user/user.entity';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -17,7 +19,7 @@ import { User } from './user/user.entity';
       url: 'mongodb+srv://khoa1232123:khoa1232123@cluster0.vyqb5dn.mongodb.net/learn-nestjs-api?retryWrites=true&w=majority',
       synchronize: true,
       useUnifiedTopology: true,
-      entities: [Lesson, Student, User],
+      entities: [Lesson, Student, User, Post],
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       autoSchemaFile: true,
@@ -28,6 +30,7 @@ import { User } from './user/user.entity';
     LessonModule,
     StudentModule,
     UserModule,
+    PostModule,
   ],
 })
 export class AppModule {}

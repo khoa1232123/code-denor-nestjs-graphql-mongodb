@@ -11,36 +11,41 @@ import {
 
 @ObjectType()
 @Entity()
-export class User extends BaseEntity {
+export class Post extends BaseEntity {
   @ObjectIdColumn()
   _id: string;
 
   @Field((_type) => ID)
   @PrimaryGeneratedColumn()
-  id: string;
-
-  @Field()
-  @Column({ unique: true })
-  username!: string;
-
-  @Field()
-  @Column({ unique: true })
-  email!: string;
+  id!: string;
 
   @Field()
   @Column()
-  firstName: string;
+  userId!: string;
 
   @Field()
   @Column()
-  lastName: string;
+  title!: string;
 
   @Field()
   @Column()
-  mobile: string;
+  slug!: string;
 
+  @Field()
   @Column()
-  password!: string;
+  summary: string;
+
+  @Field()
+  @Column({ default: true })
+  published: boolean;
+
+  @Field()
+  @Column()
+  content: string;
+
+  @Field()
+  @Column()
+  categoryId!: string;
 
   @Field()
   @CreateDateColumn()

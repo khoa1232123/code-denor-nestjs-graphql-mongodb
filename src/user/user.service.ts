@@ -328,7 +328,7 @@ export class UserService {
         };
       }
 
-      const resetPasswordTokenValid = argon2.verify(
+      const resetPasswordTokenValid = await argon2.verify(
         token,
         changePasswordWhenForgotInput.token,
       );
@@ -350,6 +350,8 @@ export class UserService {
       const userId = changePasswordWhenForgotInput.userId;
 
       const user = await User.findOneBy({ id: userId });
+
+      req.session.token = '';
 
       if (!user) {
         return {
