@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { User } from 'src/user/user.entity';
 import {
   BaseEntity,
   Column,
@@ -9,9 +10,9 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@ObjectType()
+@ObjectType('Post')
 @Entity()
-export class Post extends BaseEntity {
+export class Post {
   @ObjectIdColumn()
   _id: string;
 
@@ -46,6 +47,9 @@ export class Post extends BaseEntity {
   @Field()
   @Column()
   categoryId!: string;
+
+  @Field((_type) => User)
+  user: User;
 
   @Field()
   @CreateDateColumn()

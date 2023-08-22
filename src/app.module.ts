@@ -11,6 +11,9 @@ import { Student } from './student/student.entity';
 import { StudentModule } from './student/student.module';
 import { User } from './user/user.entity';
 import { UserModule } from './user/user.module';
+import { DataloaderModule } from './dataloader/dataloader.module';
+import { DataloaderService } from './dataloader/dataloader.service';
+import { ContextType } from './types/Context';
 
 @Module({
   imports: [
@@ -21,16 +24,31 @@ import { UserModule } from './user/user.module';
       useUnifiedTopology: true,
       entities: [Lesson, Student, User, Post],
     }),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      autoSchemaFile: true,
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
+      // autoSchemaFile: true,
       driver: ApolloDriver,
-      playground: false,
-      plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      // playground: false,
+      // plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      imports: [DataloaderModule],
+      useFactory: (dataloaderService: DataloaderService) => {
+        return {
+          autoSchemaFile: true,
+          context: ({ req, res }): ContextType => ({
+            req,
+            res,
+            loaders: dataloaderService.getLoaders(),
+          }),
+          playground: false,
+          plugins: [ApolloServerPluginLandingPageLocalDefault()],
+        };
+      },
+      inject: [DataloaderService],
     }),
     LessonModule,
     StudentModule,
     UserModule,
     PostModule,
+    // DataloaderModule,
   ],
 })
 export class AppModule {}

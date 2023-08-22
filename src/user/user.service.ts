@@ -178,6 +178,29 @@ export class UserService {
     }
   }
 
+  async getUserById(id: string): Promise<User> {
+    return this.userRepository.findOneBy({ id });
+  }
+
+  public async getAllUsersByIds(userIds: readonly string[]): Promise<User[]> {
+    const findQuery: any = { $in: userIds };
+    return await this.userRepository.find({ where: { id: findQuery } });
+  }
+
+  public async getUsersByBatch(
+    userIds: readonly string[],
+  ): Promise<(User | any)[]> {
+    const users = await this.getAllUsersByIds(userIds);
+    const mappedResults = this._mapResultToIds(userIds, users);
+    return mappedResults;
+  }
+
+  private _mapResultToIds(userIds: readonly string[], users: User[]) {
+    return userIds.map(
+      (id) => users.filter((user: User) => user.id === id) || null,
+    );
+  }
+
   async logout({ req, res }: ContextType): Promise<boolean> {
     return new Promise((resolve, _reject) => {
       req.session.destroy((error) => {

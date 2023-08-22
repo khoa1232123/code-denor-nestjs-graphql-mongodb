@@ -12,6 +12,9 @@ async function bootstrap() {
       name: COOKIE_NAME,
       cookie: {
         maxAge: 1000 * 60 * 60,
+        httpOnly: true,
+        secure: false,
+        sameSite: 'lax',
       },
       secret: COOKIE_NAME,
       saveUninitialized: true,

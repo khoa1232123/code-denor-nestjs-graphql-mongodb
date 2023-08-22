@@ -50,4 +50,23 @@ export class PostService {
       };
     }
   }
+
+  async getPosts(): Promise<DataMutationResponse> {
+    try {
+      const posts = await this.postRepository.find();
+
+      return {
+        code: 200,
+        success: true,
+        message: 'Create Post successfully',
+        posts: posts,
+      };
+    } catch (error) {
+      return {
+        code: 500,
+        success: false,
+        message: `Internal server error: ${error.message}`,
+      };
+    }
+  }
 }
