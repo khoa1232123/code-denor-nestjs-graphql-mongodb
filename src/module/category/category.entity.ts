@@ -1,7 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { User } from 'src/user/user.entity';
+import { User } from 'src/module/user/user.entity';
 import {
-  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
@@ -10,19 +9,15 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@ObjectType('Post')
+@ObjectType('Category')
 @Entity()
-export class Post {
+export class Category {
   @ObjectIdColumn()
   _id: string;
 
   @Field((_type) => ID)
   @PrimaryGeneratedColumn()
   id!: string;
-
-  @Field()
-  @Column()
-  userId!: string;
 
   @Field()
   @Column()
@@ -34,22 +29,7 @@ export class Post {
 
   @Field()
   @Column()
-  summary: string;
-
-  @Field()
-  @Column({ default: true })
-  published: boolean;
-
-  @Field()
-  @Column()
   content: string;
-
-  @Field()
-  @Column()
-  categoryId!: string;
-
-  @Field((_type) => User)
-  user: User;
 
   @Field()
   @CreateDateColumn()

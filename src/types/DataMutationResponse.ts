@@ -1,7 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { User } from 'src/user/user.entity';
+import { User } from 'src/module/user/user.entity';
 import { MutationResponse } from './MutationResponse';
-import { Post } from 'src/post/post.entity';
+import { Post } from 'src/module/post/post.entity';
 
 @ObjectType({ implements: MutationResponse })
 export class DataMutationResponse extends MutationResponse {
@@ -10,6 +10,9 @@ export class DataMutationResponse extends MutationResponse {
 
   @Field((_type) => [Post], { nullable: true })
   posts?: Post[];
+
+  @Field({ nullable: true })
+  count?: number;
 
   @Field({ nullable: true })
   user?: User;

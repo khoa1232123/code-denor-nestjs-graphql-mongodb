@@ -22,6 +22,19 @@ export class UserService {
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
+  public async getAllUsersByIds(userIds: readonly string[]): Promise<User[]> {
+    const findQuery: any = { $in: userIds };
+    return await this.userRepository.find({ where: { id: findQuery } });
+  }
+
+  public async getUsersByBatch(
+    userIds: readonly string[],
+  ): Promise<User | any> {
+    const users = await this.getAllUsersByIds(userIds);
+    const mappedResults = this._mapResultToIds(userIds, users);
+    return mappedResults;
+  }
+
   async register({
     email,
     password,
@@ -176,23 +189,6 @@ export class UserService {
         message: `Internal server error: ${error.message}`,
       };
     }
-  }
-
-  async getUserById(id: string): Promise<User> {
-    return this.userRepository.findOneBy({ id });
-  }
-
-  public async getAllUsersByIds(userIds: readonly string[]): Promise<User[]> {
-    const findQuery: any = { $in: userIds };
-    return await this.userRepository.find({ where: { id: findQuery } });
-  }
-
-  public async getUsersByBatch(
-    userIds: readonly string[],
-  ): Promise<(User | any)[]> {
-    const users = await this.getAllUsersByIds(userIds);
-    const mappedResults = this._mapResultToIds(userIds, users);
-    return mappedResults;
   }
 
   private _mapResultToIds(userIds: readonly string[], users: User[]) {

@@ -3,17 +3,19 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Lesson } from './lesson/lesson.entity';
-import { LessonModule } from './lesson/lesson.module';
-import { Post } from './post/post.entity';
-import { PostModule } from './post/post.module';
-import { Student } from './student/student.entity';
-import { StudentModule } from './student/student.module';
-import { User } from './user/user.entity';
-import { UserModule } from './user/user.module';
-import { DataloaderModule } from './dataloader/dataloader.module';
-import { DataloaderService } from './dataloader/dataloader.service';
+import { Lesson } from './module/lesson/lesson.entity';
+import { LessonModule } from './module/lesson/lesson.module';
+import { Post } from './module/post/post.entity';
+import { PostModule } from './module/post/post.module';
+import { Student } from './module/student/student.entity';
+import { StudentModule } from './module/student/student.module';
+import { User } from './module/user/user.entity';
+import { UserModule } from './module/user/user.module';
+import { DataloaderModule } from './module/dataloader/dataloader.module';
+import { DataloaderService } from './module/dataloader/dataloader.service';
 import { ContextType } from './types/Context';
+import { PostCommentModule } from './module/post-comment/post-comment.module';
+import { CategoryModule } from './module/category/category.module';
 
 @Module({
   imports: [
@@ -25,10 +27,7 @@ import { ContextType } from './types/Context';
       entities: [Lesson, Student, User, Post],
     }),
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
-      // autoSchemaFile: true,
       driver: ApolloDriver,
-      // playground: false,
-      // plugins: [ApolloServerPluginLandingPageLocalDefault()],
       imports: [DataloaderModule],
       useFactory: (dataloaderService: DataloaderService) => {
         return {
@@ -48,7 +47,8 @@ import { ContextType } from './types/Context';
     StudentModule,
     UserModule,
     PostModule,
-    // DataloaderModule,
+    PostCommentModule,
+    CategoryModule,
   ],
 })
 export class AppModule {}

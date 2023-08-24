@@ -1,6 +1,6 @@
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { DataMutationResponse } from 'src/types/DataMutationResponse';
-import { ContextType } from '../types/Context';
+import { ContextType } from '../../types/Context';
 import { User } from './user.entity';
 import {
   ChangePasswordInput,

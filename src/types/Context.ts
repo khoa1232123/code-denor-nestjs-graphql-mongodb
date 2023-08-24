@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Session, SessionData } from 'express-session';
-import { IDataloaders } from 'src/dataloader/dataloader.interface';
+import { IDataloaders } from 'src/module/dataloader/dataloader.interface';
 
 export type ContextType = {
   req: Request & {

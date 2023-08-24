@@ -1,4 +1,4 @@
-import { RegisterInput } from 'src/user/user.input';
+import { RegisterInput } from 'src/module/user/user.input';
 
 export const validateRegisterInput = (registerInput: RegisterInput) => {
   if (!registerInput.email.includes('@')) {
