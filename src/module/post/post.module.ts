@@ -4,9 +4,10 @@ import { UserModule } from 'src/module/user/user.module';
 import { Post } from './post.entity';
 import { PostResolver } from './post.resolver';
 import { PostService } from './post.service';
+import { CategoryModule } from '../category/category.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Post]), UserModule],
+  imports: [TypeOrmModule.forFeature([Post]), UserModule, CategoryModule],
   providers: [PostService, PostResolver],
 })
 export class PostModule {}

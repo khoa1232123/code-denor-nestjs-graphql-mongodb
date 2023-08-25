@@ -16,6 +16,7 @@ import { DataloaderService } from './module/dataloader/dataloader.service';
 import { ContextType } from './types/Context';
 import { PostCommentModule } from './module/post-comment/post-comment.module';
 import { CategoryModule } from './module/category/category.module';
+import { Category } from './module/category/category.entity';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { CategoryModule } from './module/category/category.module';
       url: 'mongodb+srv://khoa1232123:khoa1232123@cluster0.vyqb5dn.mongodb.net/learn-nestjs-api?retryWrites=true&w=majority',
       synchronize: true,
       useUnifiedTopology: true,
-      entities: [Lesson, Student, User, Post],
+      entities: [Lesson, Student, User, Post, Category],
     }),
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,

@@ -18,12 +18,25 @@ export class PostResolver {
   constructor(private postService: PostService) {}
 
   @ResolveField()
-  async users(
+  async user(
     @Parent() post: Post,
     @Context() { loaders: { usersLoader } }: ContextType,
   ) {
     const users = await usersLoader.load(post.userId);
+
     return users;
+  }
+
+  @ResolveField()
+  async categories(
+    @Parent() post: Post,
+    @Context() { loaders: { catsLoader } }: ContextType,
+  ) {
+    const cats = await catsLoader.loadMany(post?.postCatIds || []);
+
+    console.log({ cats });
+
+    return cats;
   }
 
   @Mutation((returns) => DataMutationResponse)

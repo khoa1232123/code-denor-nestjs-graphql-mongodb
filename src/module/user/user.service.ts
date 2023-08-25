@@ -22,17 +22,17 @@ export class UserService {
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
-  public async getAllUsersByIds(userIds: readonly string[]): Promise<User[]> {
-    const findQuery: any = { $in: userIds };
-    return await this.userRepository.find({ where: { id: findQuery } });
-  }
-
   public async getUsersByBatch(
     userIds: readonly string[],
   ): Promise<User | any> {
     const users = await this.getAllUsersByIds(userIds);
-    const mappedResults = this._mapResultToIds(userIds, users);
-    return mappedResults;
+
+    return users;
+  }
+
+  public async getAllUsersByIds(userIds: readonly string[]): Promise<User[]> {
+    const findQuery: any = { $in: userIds };
+    return await this.userRepository.find({ where: { id: findQuery } });
   }
 
   async register({
@@ -189,12 +189,6 @@ export class UserService {
         message: `Internal server error: ${error.message}`,
       };
     }
-  }
-
-  private _mapResultToIds(userIds: readonly string[], users: User[]) {
-    return userIds.map(
-      (id) => users.filter((user: User) => user.id === id) || null,
-    );
   }
 
   async logout({ req, res }: ContextType): Promise<boolean> {

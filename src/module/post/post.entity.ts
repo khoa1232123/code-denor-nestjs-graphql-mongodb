@@ -44,14 +44,14 @@ export class Post {
   @Column()
   content: string;
 
-  @Field((_type) => [User])
-  users: User[];
+  @Field((_type) => User, { nullable: true })
+  user: User;
 
   @Field((_type) => [String], { defaultValue: [] })
   @Column()
   postCatIds: string[];
 
-  @Field((_type) => [Category], { defaultValue: [] })
+  @Field((_type) => [Category], { nullable: true, defaultValue: [] })
   categories: Category[];
 
   @Field((_type) => [String], { defaultValue: [] })
