@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ContextType } from 'src/types/Context';
 import { DataMutationResponse } from 'src/types/DataMutationResponse';
 import { handleSlug } from 'src/utils/func';
-import { FindManyOptions, Repository } from 'typeorm';
+import { FindManyOptions, In, Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { Post } from './post.entity';
 import { CreatePostInput, GetPostsInput, UpdatePostInput } from './post.input';
@@ -13,6 +13,28 @@ export class PostService {
   constructor(
     @InjectRepository(Post) private postRepository: Repository<Post>,
   ) {}
+
+  // DataLoader
+  public async getPostsByUserByBatch(
+    userIds: readonly string[],
+  ): Promise<Post[] | any> {
+    const posts = await this.getPostsByUserIds(userIds);
+    const mappedResults = this._mapResultToIds(userIds, posts);
+
+    return mappedResults;
+  }
+
+  async getPostsByUserIds(userIds: readonly string[]): Promise<Post[]> {
+    const findQuery: any = { $in: userIds };
+
+    return await this.postRepository.find({ where: { userId: findQuery } });
+  }
+
+  private _mapResultToIds(userIds: readonly string[], posts: Post[]) {
+    return userIds.map(
+      (id) => posts.filter((post: Post) => post.userId === id) || null,
+    );
+  }
 
   async create(
     createPostInput: CreatePostInput,

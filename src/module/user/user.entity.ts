@@ -8,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Post } from '../post/post.entity';
 
 @ObjectType()
 @Entity()
@@ -41,6 +42,9 @@ export class User extends BaseEntity {
 
   @Column()
   password!: string;
+
+  @Field((_type) => [Post], { nullable: true })
+  posts: Post[];
 
   @Field()
   @CreateDateColumn()

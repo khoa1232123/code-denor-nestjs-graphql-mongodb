@@ -1,4 +1,12 @@
-import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { DataMutationResponse } from 'src/types/DataMutationResponse';
 import { ContextType } from '../../types/Context';
 import { User } from './user.entity';
@@ -14,6 +22,18 @@ import { UserService } from './user.service';
 @Resolver((of) => User)
 export class UserResolver {
   constructor(private userService: UserService) {}
+
+  @ResolveField()
+  async posts(
+    @Parent() user: User,
+    @Context() { loaders: { postsWithUserLoader } }: ContextType,
+  ) {
+    const posts = await postsWithUserLoader.load(user.id);
+
+    console.log('hello', { posts });
+
+    return posts;
+  }
 
   @Query((returns) => DataMutationResponse)
   async me(@Context() context: ContextType): Promise<DataMutationResponse> {
