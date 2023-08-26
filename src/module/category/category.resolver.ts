@@ -1,4 +1,12 @@
-import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { CategoryService } from './category.service';
 import { DataMutationResponse } from 'src/types/DataMutationResponse';
 import {
@@ -7,10 +15,19 @@ import {
   UpdateCategoryInput,
 } from './category.input';
 import { ContextType } from 'src/types/Context';
+import { Category } from './category.entity';
 
-@Resolver()
+@Resolver((of) => Category)
 export class CategoryResolver {
   constructor(private catService: CategoryService) {}
+
+  @ResolveField()
+  async posts(
+    @Parent() cat: Category,
+    @Context() { loaders: { postsWithCatLoader } }: ContextType,
+  ) {
+    return await postsWithCatLoader.load(cat.id);
+  }
 
   @Query((returns) => DataMutationResponse)
   async getCategories(
@@ -39,6 +56,15 @@ export class CategoryResolver {
     updateCategoryInput: UpdateCategoryInput,
     @Context() context: ContextType,
   ): Promise<DataMutationResponse> {
-    return this.catService.create(updateCategoryInput, context);
+    return this.catService.update(updateCategoryInput, context);
+  }
+
+  @Mutation((returns) => DataMutationResponse)
+  async deleteCategory(
+    @Args('id')
+    id: string,
+    @Context() context: ContextType,
+  ): Promise<DataMutationResponse> {
+    return this.catService.delete(id, context);
   }
 }

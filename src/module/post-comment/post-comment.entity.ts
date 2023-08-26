@@ -1,5 +1,4 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Post } from 'src/module/post/post.entity';
 import {
   Column,
   CreateDateColumn,
@@ -8,6 +7,7 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { User } from '../user/user.entity';
 
 @ObjectType('PostComment')
 @Entity()
@@ -23,9 +23,13 @@ export class PostComment {
   @Column()
   postId: string;
 
-  @Field((type) => Post)
+  @Field((type) => ID)
   @Column()
-  post: Post;
+  userId: string;
+
+  @Field((type) => User)
+  @Column()
+  user: User;
 
   @Field()
   @Column()

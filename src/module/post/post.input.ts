@@ -25,6 +25,9 @@ export class CreatePostInput {
 
   @Field((_type) => [String], { defaultValue: [] })
   postCatIds?: string[];
+
+  @Field((_type) => [String], { defaultValue: [] })
+  postTagIds?: string[];
 }
 
 @InputType()
@@ -38,7 +41,7 @@ export class UpdatePostInput {
   @Field({ defaultValue: '' })
   summary?: string;
 
-  @Field()
+  @Field({ nullable: true })
   published?: boolean;
 
   @Field({ defaultValue: '' })
@@ -46,4 +49,7 @@ export class UpdatePostInput {
 
   @Field((_type) => [String], { defaultValue: [] })
   postCatIds?: string[];
+
+  @Field((_type) => [String], { defaultValue: [] })
+  postTagIds?: string[];
 }

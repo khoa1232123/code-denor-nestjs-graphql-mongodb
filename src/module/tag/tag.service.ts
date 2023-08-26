@@ -1,58 +1,46 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Category } from './category.entity';
-import { FindManyOptions, Repository } from 'typeorm';
-import {
-  CreateCategoryInput,
-  GetCategoriesInput,
-  UpdateCategoryInput,
-} from './category.input';
 import { ContextType } from 'src/types/Context';
 import { DataMutationResponse } from 'src/types/DataMutationResponse';
-import { v4 as uuidv4 } from 'uuid';
 import { handleSlug } from 'src/utils/func';
+import { FindManyOptions, Repository } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
+import { Tag } from './tag.entity';
+import { CreateTagInput, GetTagsInput, UpdateTagInput } from './tag.input';
 
 @Injectable()
-export class CategoryService {
-  constructor(
-    @InjectRepository(Category) private catRepository: Repository<Category>,
-  ) {}
+export class TagService {
+  constructor(@InjectRepository(Tag) private tagRepository: Repository<Tag>) {}
 
-  //   Dataloader Categories
-  public async getCatsByBatch(
-    catIds: readonly string[],
-  ): Promise<Category | any> {
-    const cats = await this.getAllCatsByIds(catIds);
-    return cats;
+  //   Dataloader Tags
+  public async getTagsByBatch(tagIds: readonly string[]): Promise<Tag | any> {
+    return await this.getAllTagsByIds(tagIds);
   }
 
-  public async getAllCatsByIds(catIds: readonly string[]): Promise<Category[]> {
-    const findQuery: any = { $in: catIds };
+  public async getAllTagsByIds(tagIds: readonly string[]): Promise<Tag[]> {
+    const findQuery: any = { $in: tagIds };
 
-    return await this.catRepository.find({ where: { id: findQuery } });
+    return await this.tagRepository.find({ where: { id: findQuery } });
   }
 
-  async getCategories({
-    limit,
-    page,
-  }: GetCategoriesInput): Promise<DataMutationResponse> {
+  async getTags({ limit, page }: GetTagsInput): Promise<DataMutationResponse> {
     try {
       const realLimit = Math.min(50, limit);
 
       const offset = (Number(page) - 1) * limit;
 
-      const findOptions: FindManyOptions<Category> = {
+      const findOptions: FindManyOptions<Tag> = {
         take: realLimit,
         skip: offset,
       };
 
-      const catsAndCount = await this.catRepository.findAndCount(findOptions);
+      const catsAndCount = await this.tagRepository.findAndCount(findOptions);
 
       return {
         code: 200,
         success: true,
         message: 'Get Categories successfully',
-        categories: catsAndCount[0],
+        tags: catsAndCount[0],
         count: catsAndCount[1],
       };
     } catch (error) {
@@ -64,15 +52,15 @@ export class CategoryService {
     }
   }
 
-  async getCategory(id: string): Promise<DataMutationResponse> {
+  async getTag(id: string): Promise<DataMutationResponse> {
     try {
-      const category = await this.catRepository.findOneBy({ id });
+      const tag = await this.tagRepository.findOneBy({ id });
 
       return {
         code: 200,
         success: true,
-        message: `Get Category with id: ${id} successfully`,
-        category: category,
+        message: `Get tag with id: ${id} successfully`,
+        tag: tag,
       };
     } catch (error) {
       return {
@@ -84,7 +72,7 @@ export class CategoryService {
   }
 
   async create(
-    createCategoryInput: CreateCategoryInput,
+    createTagInput: CreateTagInput,
     { req }: ContextType,
   ): Promise<DataMutationResponse> {
     if (!req.session.userId) {
@@ -96,19 +84,19 @@ export class CategoryService {
     }
 
     try {
-      const category = this.catRepository.create({
+      const tag = this.tagRepository.create({
         id: uuidv4(),
-        ...createCategoryInput,
-        slug: handleSlug(createCategoryInput.title),
+        ...createTagInput,
+        slug: handleSlug(createTagInput.title),
       });
 
-      const createdCategory = await this.catRepository.save(category);
+      const createdTag = await this.tagRepository.save(tag);
 
       return {
         code: 200,
         success: true,
-        message: 'Create Category successfully',
-        category: createdCategory,
+        message: 'Create tag successfully',
+        tag: createdTag,
       };
     } catch (error) {
       return {
@@ -120,7 +108,7 @@ export class CategoryService {
   }
 
   async update(
-    { id, title, content }: UpdateCategoryInput,
+    { id, title }: UpdateTagInput,
     { req }: ContextType,
   ): Promise<DataMutationResponse> {
     try {
@@ -132,9 +120,9 @@ export class CategoryService {
         };
       }
 
-      const existingCat = await this.catRepository.findOneBy({ id });
+      const existingTag = await this.tagRepository.findOneBy({ id });
 
-      if (!existingCat) {
+      if (!existingTag) {
         return {
           code: 400,
           success: false,
@@ -143,18 +131,15 @@ export class CategoryService {
       }
 
       if (title) {
-        existingCat.title = title;
+        existingTag.title = title;
       }
-      if (content) {
-        existingCat.content = content;
-      }
-      await this.catRepository.save(existingCat);
+      await this.tagRepository.save(existingTag);
 
       return {
         code: 200,
         success: true,
-        message: 'Category updated successfully',
-        category: existingCat,
+        message: 'Tag updated successfully',
+        tag: existingTag,
       };
     } catch (error) {
       console.log(error);
@@ -179,21 +164,21 @@ export class CategoryService {
         };
       }
 
-      const existingCat = await this.catRepository.findOneBy({ id });
-      if (!existingCat) {
+      const existingTag = await this.tagRepository.findOneBy({ id });
+      if (!existingTag) {
         return {
           code: 400,
           success: false,
-          message: `Category not found`,
+          message: `Tag not found`,
         };
       }
 
-      await this.catRepository.remove(existingCat);
+      await this.tagRepository.remove(existingTag);
 
       return {
         code: 200,
         success: true,
-        message: 'Category deleted successfully',
+        message: 'Tag deleted successfully',
       };
     } catch (error) {
       console.log(error);

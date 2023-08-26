@@ -10,9 +10,9 @@ import {
 } from 'typeorm';
 import { Post } from '../post/post.entity';
 
-@ObjectType('Category')
+@ObjectType('Tag')
 @Entity()
-export class Category {
+export class Tag {
   @ObjectIdColumn()
   _id: string;
 
@@ -28,18 +28,6 @@ export class Category {
   @Column()
   slug!: string;
 
-  @Field()
-  @Column()
-  content: string;
-
   @Field((_type) => [Post], { nullable: true })
   posts: Post[];
-
-  @Field()
-  @CreateDateColumn()
-  createdAt!: Date;
-
-  @Field()
-  @UpdateDateColumn()
-  updatedAt!: Date;
 }

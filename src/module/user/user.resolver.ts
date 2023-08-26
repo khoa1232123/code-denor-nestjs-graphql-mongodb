@@ -30,8 +30,6 @@ export class UserResolver {
   ) {
     const posts = await postsWithUserLoader.load(user.id);
 
-    console.log('hello', { posts });
-
     return posts;
   }
 

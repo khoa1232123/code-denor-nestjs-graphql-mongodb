@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ContextType } from 'src/types/Context';
 import { DataMutationResponse } from 'src/types/DataMutationResponse';
 import { handleSlug } from 'src/utils/func';
-import { FindManyOptions, In, Repository } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { Post } from './post.entity';
 import { CreatePostInput, GetPostsInput, UpdatePostInput } from './post.input';
@@ -14,12 +14,12 @@ export class PostService {
     @InjectRepository(Post) private postRepository: Repository<Post>,
   ) {}
 
-  // DataLoader
+  // DataLoader Posts by User
   public async getPostsByUserByBatch(
     userIds: readonly string[],
   ): Promise<Post[] | any> {
     const posts = await this.getPostsByUserIds(userIds);
-    const mappedResults = this._mapResultToIds(userIds, posts);
+    const mappedResults = this._mapResultToUserIds(userIds, posts);
 
     return mappedResults;
   }
@@ -30,9 +30,55 @@ export class PostService {
     return await this.postRepository.find({ where: { userId: findQuery } });
   }
 
-  private _mapResultToIds(userIds: readonly string[], posts: Post[]) {
+  private _mapResultToUserIds(userIds: readonly string[], posts: Post[]) {
     return userIds.map(
       (id) => posts.filter((post: Post) => post.userId === id) || null,
+    );
+  }
+
+  // DataLoader Posts by Cat
+  public async getPostsByCatByBatch(
+    catIds: readonly string[],
+  ): Promise<Post[] | any> {
+    const posts = await this.getPostsByCatIds(catIds);
+    const mappedResults = this._mapResultToCatIds(catIds, posts);
+
+    return mappedResults;
+  }
+
+  async getPostsByCatIds(catIds: readonly string[]): Promise<Post[]> {
+    const findQuery: any = { $in: catIds };
+
+    return await this.postRepository.find({ where: { postCatIds: findQuery } });
+  }
+
+  private _mapResultToCatIds(catIds: readonly string[], posts: Post[]) {
+    return catIds.map(
+      (id) =>
+        posts.filter((post: Post) => post.postCatIds.includes(id)) || null,
+    );
+  }
+
+  // DataLoader Posts by Cat
+  public async getPostsByTagByBatch(
+    tagIds: readonly string[],
+  ): Promise<Post[] | any> {
+    const posts = await this.getPostsByTagIds(tagIds);
+    const mappedResults = this._mapResultToTagIds(tagIds, posts);
+
+    return mappedResults;
+  }
+
+  async getPostsByTagIds(tagIds: readonly string[]): Promise<Post[]> {
+    const findQuery: any = { $in: tagIds };
+
+    return await this.postRepository.find({ where: { postTagIds: findQuery } });
+  }
+
+  private _mapResultToTagIds(tagIds: readonly string[], posts: Post[]) {
+    return tagIds.map(
+      (id) =>
+        posts.filter((post: Post) => post.postTagIds.includes(id)) || null,
     );
   }
 
@@ -125,7 +171,15 @@ export class PostService {
   }
 
   async updatePost(
-    { id, title, postCatIds, content, published, summary }: UpdatePostInput,
+    {
+      id,
+      title,
+      postCatIds,
+      postTagIds,
+      content,
+      published,
+      summary,
+    }: UpdatePostInput,
     { req }: ContextType,
   ): Promise<DataMutationResponse> {
     try {
@@ -152,6 +206,9 @@ export class PostService {
       }
       if (postCatIds && postCatIds.length) {
         existingPost.postCatIds = postCatIds;
+      }
+      if (postTagIds && postTagIds.length) {
+        existingPost.postTagIds = postTagIds;
       }
       if (content) {
         existingPost.content = content;

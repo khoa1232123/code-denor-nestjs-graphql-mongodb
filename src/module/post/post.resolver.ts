@@ -22,9 +22,7 @@ export class PostResolver {
     @Parent() post: Post,
     @Context() { loaders: { usersLoader } }: ContextType,
   ) {
-    const users = await usersLoader.load(post.userId);
-
-    return users;
+    return await usersLoader.load(post.userId);
   }
 
   @ResolveField()
@@ -32,11 +30,23 @@ export class PostResolver {
     @Parent() post: Post,
     @Context() { loaders: { catsLoader } }: ContextType,
   ) {
-    const cats = await catsLoader.loadMany(post?.postCatIds || []);
+    return await catsLoader.loadMany(post?.postCatIds || []);
+  }
 
-    console.log({ cats });
+  @ResolveField()
+  async tags(
+    @Parent() post: Post,
+    @Context() { loaders: { tagsLoader } }: ContextType,
+  ) {
+    return await tagsLoader.loadMany(post?.postTagIds || []);
+  }
 
-    return cats;
+  @ResolveField()
+  async postComments(
+    @Parent() post: Post,
+    @Context() { loaders: { postCommentsLoader } }: ContextType,
+  ) {
+    return await postCommentsLoader.load(post.id);
   }
 
   @Mutation((returns) => DataMutationResponse)

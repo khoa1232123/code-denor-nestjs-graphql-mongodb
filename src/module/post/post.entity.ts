@@ -9,6 +9,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Category } from '../category/category.entity';
+import { Tag } from '../tag/tag.entity';
+import { PostComment } from '../post-comment/post-comment.entity';
 
 @ObjectType('Post')
 @Entity()
@@ -56,7 +58,14 @@ export class Post {
 
   @Field((_type) => [String], { defaultValue: [] })
   @Column()
-  postTags: string[];
+  postTagIds: string[];
+
+  @Field((_type) => [Tag], { defaultValue: [] })
+  @Column()
+  tags: Tag[];
+
+  @Field((_type) => [PostComment], { defaultValue: [] })
+  postComments: PostComment[];
 
   @Field()
   @CreateDateColumn()
