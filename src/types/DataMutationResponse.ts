@@ -5,11 +5,23 @@ import { Post } from 'src/module/post/post.entity';
 import { Category } from 'src/module/category/category.entity';
 import { Tag } from 'src/module/tag/tag.entity';
 import { PostComment } from 'src/module/post-comment/post-comment.entity';
+import { Product } from 'src/module/product/product.entity';
+import { ProductCat } from 'src/module/product-cat/product-cat.entity';
+import { Attribute } from 'src/module/attribute/attribute.entity';
 
 @ObjectType({ implements: MutationResponse })
 export class DataMutationResponse extends MutationResponse {
   @Field({ nullable: true })
   post?: Post;
+
+  @Field({ nullable: true })
+  product?: Product;
+
+  @Field({ nullable: true })
+  attribute?: Attribute;
+
+  @Field({ nullable: true })
+  productCat?: ProductCat;
 
   @Field({ nullable: true })
   postComment?: PostComment;
@@ -23,8 +35,17 @@ export class DataMutationResponse extends MutationResponse {
   @Field((_type) => [Category], { nullable: true })
   categories?: Category[];
 
+  @Field((_type) => [ProductCat], { nullable: true })
+  productCats?: ProductCat[];
+
   @Field((_type) => [Post], { nullable: true })
   posts?: Post[];
+
+  @Field((_type) => [Product], { nullable: true })
+  products?: Product[];
+
+  @Field((_type) => [Attribute], { nullable: true })
+  attributes?: Attribute[];
 
   @Field((_type) => [PostComment], { nullable: true })
   postComments?: PostComment[];

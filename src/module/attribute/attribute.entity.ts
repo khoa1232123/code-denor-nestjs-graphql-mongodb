@@ -1,37 +1,34 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import {
+  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
   ObjectIdColumn,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { User } from '../user/user.entity';
 
-@ObjectType('PostComment')
+@ObjectType()
 @Entity()
-export class PostComment {
+export class Attribute extends BaseEntity {
   @ObjectIdColumn()
   _id: string;
 
-  @Field((type) => ID)
-  @PrimaryColumn()
+  @Field((_type) => ID)
+  @PrimaryGeneratedColumn()
   id: string;
 
-  @Field((type) => ID)
-  @Column()
-  postId: string;
-
-  @Field((type) => ID)
-  @Column()
-  userId: string;
-
-  @Field((type) => User)
-  user: User;
-
   @Field()
-  @Column()
+  @Column({ unique: true })
+  title!: string;
+
+  @Field((_type) => [String], { nullable: true })
+  @Column({ default: [] })
+  values: string[];
+
+  @Field({ nullable: true })
+  @Column({ default: '' })
   content: string;
 
   @Field()

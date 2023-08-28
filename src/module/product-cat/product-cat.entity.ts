@@ -4,35 +4,35 @@ import {
   CreateDateColumn,
   Entity,
   ObjectIdColumn,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { User } from '../user/user.entity';
+import { Product } from '../product/product.entity';
 
-@ObjectType('PostComment')
+@ObjectType('ProductCat')
 @Entity()
-export class PostComment {
+export class ProductCat {
   @ObjectIdColumn()
   _id: string;
 
-  @Field((type) => ID)
-  @PrimaryColumn()
-  id: string;
+  @Field((_type) => ID)
+  @PrimaryGeneratedColumn()
+  id!: string;
 
-  @Field((type) => ID)
+  @Field()
   @Column()
-  postId: string;
+  title!: string;
 
-  @Field((type) => ID)
+  @Field()
   @Column()
-  userId: string;
-
-  @Field((type) => User)
-  user: User;
+  slug!: string;
 
   @Field()
   @Column()
   content: string;
+
+  @Field((_type) => [Product], { nullable: true })
+  products: Product[];
 
   @Field()
   @CreateDateColumn()

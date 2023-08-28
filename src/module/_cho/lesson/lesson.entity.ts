@@ -1,6 +1,6 @@
 import { Column, Entity, ObjectIdColumn, PrimaryColumn } from 'typeorm';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { StudentType } from 'src/module/student/student.type';
+import { StudentType } from 'src/module/_cho/student/student.type';
 
 @ObjectType('Lesson')
 @Entity()
