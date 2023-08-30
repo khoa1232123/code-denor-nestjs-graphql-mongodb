@@ -22,6 +22,7 @@ import { UserModule } from './module/user/user.module';
 import { ContextType } from './types/Context';
 import { ProductCat } from './module/product-cat/product-cat.entity';
 import { Attribute } from './module/attribute/attribute.entity';
+import { Product } from './module/product/product.entity';
 
 @Module({
   imports: [
@@ -30,7 +31,16 @@ import { Attribute } from './module/attribute/attribute.entity';
       url: 'mongodb+srv://khoa1232123:khoa1232123@cluster0.vyqb5dn.mongodb.net/learn-nestjs-api?retryWrites=true&w=majority',
       synchronize: true,
       useUnifiedTopology: true,
-      entities: [User, Post, Category, Tag, PostComment, ProductCat, Attribute],
+      entities: [
+        User,
+        Post,
+        Category,
+        Tag,
+        PostComment,
+        ProductCat,
+        Attribute,
+        Product,
+      ],
     }),
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,

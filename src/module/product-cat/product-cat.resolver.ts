@@ -21,14 +21,6 @@ import { ProductCat } from './product-cat.entity';
 export class ProductCatResolver {
   constructor(private productCatService: ProductCatService) {}
 
-  // @ResolveField()
-  // async posts(
-  //   @Parent() cat: ProductCat,
-  //   @Context() { loaders: { postsWithCatLoader } }: ContextType,
-  // ) {
-  //   return await postsWithCatLoader.load(cat.id);
-  // }
-
   @Query((returns) => DataMutationResponse)
   async getProductCats(
     @Args('getProductCatsInput', { nullable: true, defaultValue: {} })

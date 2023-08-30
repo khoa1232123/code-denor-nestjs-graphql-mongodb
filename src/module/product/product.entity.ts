@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, InputType, ObjectType } from '@nestjs/graphql';
 import {
   BaseEntity,
   Column,
@@ -10,6 +10,19 @@ import {
 } from 'typeorm';
 import { User } from '../user/user.entity';
 import { Max, Min } from 'class-validator';
+
+@ObjectType()
+@Entity()
+@InputType('ProductVariantInput')
+export class ProductVariant {
+  @Field()
+  @Column()
+  attributeId: string;
+
+  @Field((_type) => [String], { defaultValue: [], nullable: true })
+  @Column({ unique: true })
+  values: string[];
+}
 
 @ObjectType()
 @Entity()
@@ -64,7 +77,7 @@ export class Product extends BaseEntity {
   @Column({ default: 0 })
   quantity: number;
 
-  @Field((_type) => [ProductVariant], { nullable: true })
+  @Field((_type) => [ProductVariant], { nullable: true, defaultValue: [] })
   @Column({ default: [] })
   variants: ProductVariant[];
 
@@ -83,38 +96,10 @@ export class Product extends BaseEntity {
 
 @ObjectType()
 @Entity()
-class ProductVariant {
-  @Field()
-  id!: string;
-
-  @Field()
-  title!: string;
-
-  @Field((_type) => [VariantValueItem], { defaultValue: [], nullable: true })
-  values: string[];
-}
-
-@ObjectType()
-@Entity()
-class VariantValueItem {
-  @Field()
-  id!: number;
-
-  @Field({ defaultValue: '' })
-  value!: string;
-}
-
-@ObjectType()
-@Entity()
-class VariantOptions {
-  @Field()
-  attributeId!: string;
-
-  @Field()
-  attributeValue!: string;
-
-  @Field((_type) => [String], { defaultValue: [] })
-  variants: string[];
+@InputType('VariantOptionsInput')
+export class VariantOptions {
+  @Field((_type) => [VariantOptionItem], { defaultValue: [] })
+  variants: VariantOptionItem[];
 
   @Field()
   title!: string;
@@ -125,7 +110,7 @@ class VariantOptions {
   @Field()
   SKU!: string;
 
-  @Field()
+  @Field({ defaultValue: '' })
   @Column()
   image: string;
 
@@ -151,4 +136,11 @@ class VariantOptions {
 
 @ObjectType()
 @Entity()
-class VariantInOptions extends ProductVariant {}
+@InputType('VariantOptionItemInput')
+export class VariantOptionItem {
+  @Field()
+  attributeId!: string;
+
+  @Field({ defaultValue: '' })
+  value!: string;
+}
