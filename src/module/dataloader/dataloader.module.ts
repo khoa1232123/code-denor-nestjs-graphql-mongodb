@@ -10,6 +10,8 @@ import { TagResolver } from '../tag/tag.resolver';
 import { DataloaderService } from './dataloader.service';
 import { PostCommentModule } from '../post-comment/post-comment.module';
 import { PostCommentResolver } from '../post-comment/post-comment.resolver';
+import { AttributeModule } from '../attribute/attribute.module';
+import { AttributeResolver } from '../attribute/attribute.resolver';
 
 @Module({
   imports: [
@@ -18,6 +20,7 @@ import { PostCommentResolver } from '../post-comment/post-comment.resolver';
     PostModule,
     TagModule,
     PostCommentModule,
+    AttributeModule,
   ],
   providers: [
     DataloaderService,
@@ -26,6 +29,7 @@ import { PostCommentResolver } from '../post-comment/post-comment.resolver';
     CategoryResolver,
     TagResolver,
     PostCommentResolver,
+    AttributeResolver,
   ],
   exports: [DataloaderService],
 })

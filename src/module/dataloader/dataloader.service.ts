@@ -11,6 +11,8 @@ import { TagService } from '../tag/tag.service';
 import { Tag } from '../tag/tag.entity';
 import { PostCommentService } from '../post-comment/post-comment.service';
 import { PostComment } from '../post-comment/post-comment.entity';
+import { AttributeService } from '../attribute/attribute.service';
+import { Attribute } from '../attribute/attribute.entity';
 
 @Injectable()
 export class DataloaderService {
@@ -20,6 +22,7 @@ export class DataloaderService {
     private readonly catService: CategoryService,
     private readonly tagService: TagService,
     private readonly postCommentService: PostCommentService,
+    private readonly attributeService: AttributeService,
   ) {}
 
   getLoaders(): IDataloaders {
@@ -30,6 +33,7 @@ export class DataloaderService {
     const postsWithCatLoader = this._createPostsWithCatLoader();
     const postsWithTagLoader = this._createPostsWithTagLoader();
     const postCommentsLoader = this._createPostCommentsLoader();
+    const attributeLoader = this._createAttributesLoader();
 
     return {
       postsWithUserLoader,
@@ -39,6 +43,7 @@ export class DataloaderService {
       catsLoader,
       tagsLoader,
       postCommentsLoader,
+      attributeLoader,
     };
   }
 
@@ -88,6 +93,13 @@ export class DataloaderService {
     return new DataLoader<string, PostComment[]>(
       async (keys: readonly string[]) =>
         await this.postCommentService.getPostCommentsByBatch(keys as string[]),
+    );
+  }
+
+  private _createAttributesLoader() {
+    return new DataLoader<string, Attribute>(
+      async (keys: readonly string[]) =>
+        await this.attributeService.getAttributesByBatch(keys as string[]),
     );
   }
 }

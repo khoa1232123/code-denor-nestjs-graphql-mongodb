@@ -23,6 +23,7 @@ import { ContextType } from './types/Context';
 import { ProductCat } from './module/product-cat/product-cat.entity';
 import { Attribute } from './module/attribute/attribute.entity';
 import { Product } from './module/product/product.entity';
+import { CartModule } from './module/cart/cart.module';
 
 @Module({
   imports: [
@@ -68,6 +69,7 @@ import { Product } from './module/product/product.entity';
     AttributeModule,
     ProductCatModule,
     ProductReviewModule,
+    CartModule,
   ],
 })
 export class AppModule {}

@@ -20,16 +20,16 @@ export class AttributeService {
 
   //   Dataloader Attributes
   public async getAttributesByBatch(
-    catIds: readonly string[],
+    attrIds: readonly string[],
   ): Promise<Attribute | any> {
-    const cats = await this.getAllAttributesByIds(catIds);
-    return cats;
+    const attrs = await this.getAllAttributesByIds(attrIds);
+    return attrs;
   }
 
   public async getAllAttributesByIds(
-    catIds: readonly string[],
+    attrIds: readonly string[],
   ): Promise<Attribute[]> {
-    const findQuery: any = { $in: catIds };
+    const findQuery: any = { $in: attrIds };
 
     return await this.attributeRepository.find({ where: { id: findQuery } });
   }

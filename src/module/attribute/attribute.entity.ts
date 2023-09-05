@@ -1,6 +1,5 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, InputType, ObjectType } from '@nestjs/graphql';
 import {
-  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
@@ -11,7 +10,8 @@ import {
 
 @ObjectType()
 @Entity()
-export class Attribute extends BaseEntity {
+@InputType('AttributeInput')
+export class Attribute {
   @ObjectIdColumn()
   _id: string;
 

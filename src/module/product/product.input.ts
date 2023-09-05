@@ -1,6 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { Max, Min } from 'class-validator';
-import { ProductVariant, VariantOptions } from './product.entity';
+import { ProductVariant, VariantOption } from './product.entity';
 
 @InputType()
 export class GetProductsInput {
@@ -41,8 +41,8 @@ export class CreateProductInput {
   @Field((_type) => [ProductVariant], { nullable: true, defaultValue: [] })
   variants: ProductVariant[];
 
-  @Field((_type) => [VariantOptions], { nullable: true, defaultValue: [] })
-  variantOptions: VariantOptions[];
+  @Field((_type) => [VariantOption], { nullable: true, defaultValue: [] })
+  variantOptions: VariantOption[];
 }
 
 @InputType()
@@ -78,6 +78,6 @@ export class UpdateProductInput {
   @Field((_type) => [ProductVariant], { nullable: true, defaultValue: [] })
   variants: ProductVariant[];
 
-  @Field((_type) => [VariantOptions], { nullable: true, defaultValue: [] })
-  variantOptions: VariantOptions[];
+  @Field((_type) => [VariantOption], { nullable: true, defaultValue: [] })
+  variantOptions: VariantOption[];
 }

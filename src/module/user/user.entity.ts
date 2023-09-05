@@ -28,15 +28,15 @@ export class User extends BaseEntity {
   @Column({ unique: true })
   email!: string;
 
-  @Field()
+  @Field({ defaultValue: '' })
   @Column()
   firstName: string;
 
-  @Field()
+  @Field({ defaultValue: '' })
   @Column()
   lastName: string;
 
-  @Field()
+  @Field({ defaultValue: '' })
   @Column()
   mobile: string;
 

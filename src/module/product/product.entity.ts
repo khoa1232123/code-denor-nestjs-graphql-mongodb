@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { User } from '../user/user.entity';
 import { Max, Min } from 'class-validator';
+import { Attribute } from '../attribute/attribute.entity';
 
 @ObjectType()
 @Entity()
@@ -19,14 +20,17 @@ export class ProductVariant {
   @Column()
   attributeId: string;
 
+  @Field((_type) => Attribute, { nullable: true })
+  attribute: Attribute;
+
   @Field((_type) => [String], { defaultValue: [], nullable: true })
   @Column({ unique: true })
   values: string[];
 }
 
-@ObjectType()
+@ObjectType('Product')
 @Entity()
-export class Product extends BaseEntity {
+export class Product {
   @ObjectIdColumn()
   _id: string;
 
@@ -41,6 +45,10 @@ export class Product extends BaseEntity {
   @Field()
   @Column()
   slug!: string;
+
+  @Field()
+  @Column()
+  type!: string;
 
   @Field()
   @Column()
@@ -81,9 +89,9 @@ export class Product extends BaseEntity {
   @Column({ default: [] })
   variants: ProductVariant[];
 
-  @Field((_type) => [VariantOptions], { nullable: true })
+  @Field((_type) => [VariantOption], { nullable: true })
   @Column({ default: [] })
-  variantOptions: VariantOptions[];
+  variantOptions: VariantOption[];
 
   @Field()
   @CreateDateColumn()
@@ -96,16 +104,13 @@ export class Product extends BaseEntity {
 
 @ObjectType()
 @Entity()
-@InputType('VariantOptionsInput')
-export class VariantOptions {
+@InputType('VariantOptionInput')
+export class VariantOption {
   @Field((_type) => [VariantOptionItem], { defaultValue: [] })
   variants: VariantOptionItem[];
 
   @Field()
   title!: string;
-
-  @Field((_type) => [String], { nullable: true })
-  values: string[];
 
   @Field()
   SKU!: string;
@@ -140,6 +145,9 @@ export class VariantOptions {
 export class VariantOptionItem {
   @Field()
   attributeId!: string;
+
+  @Field((_type) => Attribute, { nullable: true })
+  attribute: Attribute;
 
   @Field({ defaultValue: '' })
   value!: string;
