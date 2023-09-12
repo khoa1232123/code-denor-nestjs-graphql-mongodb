@@ -23,6 +23,14 @@ export class ProductResolver {
   constructor(private productService: ProductService) {}
 
   @ResolveField()
+  async user(
+    @Parent() product: Product,
+    @Context() { loaders: { usersLoader } }: ContextType,
+  ) {
+    return await usersLoader.load(product.userId);
+  }
+
+  @ResolveField()
   async variants(
     @Parent() product: Product,
     @Context() { loaders: { attributeLoader } }: ContextType,
@@ -83,6 +91,13 @@ export class ProductResolver {
   @Query((returns) => DataMutationResponse)
   async getProduct(@Args('id') id: string): Promise<DataMutationResponse> {
     return this.productService.getProduct(id);
+  }
+
+  @Query((returns) => DataMutationResponse)
+  async getProductBySlug(
+    @Args('slug') slug: string,
+  ): Promise<DataMutationResponse> {
+    return this.productService.getProductBySlug(slug);
   }
 
   @Mutation((returns) => DataMutationResponse)

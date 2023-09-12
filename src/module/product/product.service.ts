@@ -87,6 +87,25 @@ export class ProductService {
     }
   }
 
+  async getProductBySlug(slug: string): Promise<DataMutationResponse> {
+    try {
+      const product = await this.productRepository.findOneBy({ slug });
+
+      return {
+        code: 200,
+        success: true,
+        message: `Get Product with slug: ${slug} successfully`,
+        product: product,
+      };
+    } catch (error) {
+      return {
+        code: 500,
+        success: false,
+        message: `Internal server error: ${error.message}`,
+      };
+    }
+  }
+
   async create(
     createProductInput: CreateProductInput,
     { req }: ContextType,
@@ -115,6 +134,7 @@ export class ProductService {
         id: uuidv4(),
         ...createProductInput,
         slug: slug,
+        userId: req.session.userId,
       });
 
       await this.productRepository.save(product);

@@ -55,6 +55,10 @@ import { CartModule } from './module/cart/cart.module';
             loaders: dataloaderService.getLoaders(),
           }),
           playground: false,
+          // cors: {
+          //   origin: 'http://localhost:3001',
+          //   credential: true,
+          // },
           plugins: [ApolloServerPluginLandingPageLocalDefault()],
         };
       },

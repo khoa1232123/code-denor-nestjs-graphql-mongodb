@@ -11,6 +11,7 @@ import {
 import { User } from '../user/user.entity';
 import { Max, Min } from 'class-validator';
 import { Attribute } from '../attribute/attribute.entity';
+import { Category } from '../category/category.entity';
 
 @ObjectType()
 @Entity()
@@ -46,9 +47,9 @@ export class Product {
   @Column()
   slug!: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  type!: string;
+  type: string;
 
   @Field()
   @Column()
@@ -58,14 +59,7 @@ export class Product {
   @Column({ default: true })
   published: boolean;
 
-  @Field()
-  @Column()
-  userId!: string;
-
-  @Field((_type) => User, { nullable: true })
-  user: User;
-
-  @Field()
+  @Field({ nullable: true, defaultValue: '' })
   @Column()
   image: string;
 
@@ -84,6 +78,20 @@ export class Product {
   @Min(0)
   @Column({ default: 0 })
   quantity: number;
+
+  @Field()
+  @Column()
+  userId!: string;
+
+  @Field((_type) => User, { nullable: true })
+  user: User;
+
+  @Field((_type) => [String], { nullable: true, defaultValue: [] })
+  @Column()
+  catIds: string[];
+
+  @Field((_type) => [Category], { nullable: true, defaultValue: [] })
+  categories: Category[];
 
   @Field((_type) => [ProductVariant], { nullable: true, defaultValue: [] })
   @Column({ default: [] })

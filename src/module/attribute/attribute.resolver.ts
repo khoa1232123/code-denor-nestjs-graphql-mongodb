@@ -14,7 +14,8 @@ export class AttributeResolver {
 
   @Query((returns) => DataMutationResponse)
   async getAttributes(
-    @Args('getAttributesInput') getAttributesInput: GetAttributesInput,
+    @Args('getAttributesInput', { nullable: true, defaultValue: {} })
+    getAttributesInput: GetAttributesInput,
   ): Promise<DataMutationResponse> {
     return this.attributeService.getAttributes(getAttributesInput);
   }
