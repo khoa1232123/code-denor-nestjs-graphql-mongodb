@@ -34,6 +34,9 @@ export class CreateProductInput {
   @Max(100)
   discount: number;
 
+  @Field({ defaultValue: 'normal' })
+  type: string;
+
   @Field({ defaultValue: 0 })
   @Min(0)
   quantity: number;
