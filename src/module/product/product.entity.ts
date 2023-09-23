@@ -1,6 +1,6 @@
 import { Field, ID, InputType, ObjectType } from '@nestjs/graphql';
+import { Max, Min } from 'class-validator';
 import {
-  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
@@ -8,10 +8,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { User } from '../user/user.entity';
-import { Max, Min } from 'class-validator';
 import { Attribute } from '../attribute/attribute.entity';
 import { Category } from '../category/category.entity';
+import { User } from '../user/user.entity';
 
 @ObjectType()
 @Entity()
