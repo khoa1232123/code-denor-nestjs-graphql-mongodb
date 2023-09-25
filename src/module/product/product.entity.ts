@@ -96,7 +96,7 @@ export class Product {
   @Column({ default: [] })
   variants: ProductVariant[];
 
-  @Field((_type) => [VariantOption], { nullable: true })
+  @Field((_type) => [VariantOption], { nullable: true, defaultValue: [] })
   @Column({ default: [] })
   variantOptions: VariantOption[];
 
