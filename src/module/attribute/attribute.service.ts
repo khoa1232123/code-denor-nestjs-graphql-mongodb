@@ -124,7 +124,7 @@ export class AttributeService {
   }
 
   async update(
-    { id, title, content }: UpdateAttributeInput,
+    { id, title, content, values }: UpdateAttributeInput,
     { req }: ContextType,
   ): Promise<DataMutationResponse> {
     try {
@@ -153,6 +153,9 @@ export class AttributeService {
       }
       if (content) {
         existingAttribute.content = content;
+      }
+      if (values) {
+        existingAttribute.values = values;
       }
       await this.attributeRepository.save(existingAttribute);
 
