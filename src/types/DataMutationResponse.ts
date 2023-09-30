@@ -8,6 +8,19 @@ import { PostComment } from 'src/module/post-comment/post-comment.entity';
 import { Product } from 'src/module/product/product.entity';
 import { ProductCat } from 'src/module/product-cat/product-cat.entity';
 import { Attribute } from 'src/module/attribute/attribute.entity';
+import { Entity } from 'typeorm';
+
+@ObjectType()
+export class MetaInfo {
+  @Field({ nullable: true })
+  count?: number;
+
+  @Field({ nullable: true })
+  pageCurrent?: number;
+
+  @Field({ nullable: true })
+  pageTotal?: number;
+}
 
 @ObjectType({ implements: MutationResponse })
 export class DataMutationResponse extends MutationResponse {
@@ -55,6 +68,9 @@ export class DataMutationResponse extends MutationResponse {
 
   @Field({ nullable: true })
   count?: number;
+
+  @Field((_type) => MetaInfo, { nullable: true })
+  metaInfo?: MetaInfo;
 
   @Field({ nullable: true })
   user?: User;

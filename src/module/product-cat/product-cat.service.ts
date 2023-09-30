@@ -199,7 +199,7 @@ export class ProductCatService {
     { req }: ContextType,
   ): Promise<DataMutationResponse> {
     try {
-      if (req.session.userId) {
+      if (!req.session.userId) {
         return {
           code: 401,
           success: false,

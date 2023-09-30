@@ -31,7 +31,8 @@ export class CategoryResolver {
 
   @Query((returns) => DataMutationResponse)
   async getCategories(
-    @Args('getCategoriesInput') getCategoriesInput: GetCategoriesInput,
+    @Args('getCategoriesInput', { nullable: true, defaultValue: {} })
+    getCategoriesInput: GetCategoriesInput,
   ): Promise<DataMutationResponse> {
     return this.catService.getCategories(getCategoriesInput);
   }

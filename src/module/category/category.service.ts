@@ -33,17 +33,20 @@ export class CategoryService {
   }
 
   async getCategories({
-    limit,
-    page,
+    limit = 10,
+    page = 1,
   }: GetCategoriesInput): Promise<DataMutationResponse> {
     try {
-      const realLimit = Math.min(50, limit);
+      const realLimit = Math.min(20, limit);
 
-      const offset = (Number(page) - 1) * limit;
+      const offset = (Number(page) - 1) * realLimit;
 
       const findOptions: FindManyOptions<Category> = {
         take: realLimit,
         skip: offset,
+        order: {
+          createdAt: 'DESC',
+        },
       };
 
       const catsAndCount = await this.catRepository.findAndCount(findOptions);
@@ -124,7 +127,7 @@ export class CategoryService {
     { req }: ContextType,
   ): Promise<DataMutationResponse> {
     try {
-      if (req.session.userId) {
+      if (!req.session.userId) {
         return {
           code: 401,
           success: false,
