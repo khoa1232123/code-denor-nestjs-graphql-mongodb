@@ -35,30 +35,39 @@ export class AttributeService {
   }
 
   async getAttributes({
-    limit,
-    page,
+    limit = 10,
+    page = 1,
   }: GetAttributesInput): Promise<DataMutationResponse> {
     try {
-      console.log({ limit });
-
-      const realLimit = Math.min(50, limit);
+      const realLimit = Math.min(20, limit);
+      console.log({ realLimit });
 
       const offset = (Number(page) - 1) * limit;
 
       const findOptions: FindManyOptions<Attribute> = {
         take: realLimit,
         skip: offset,
+        order: {
+          createdAt: 'DESC',
+        },
       };
 
-      const productCatsAndCount =
+      const attrsAndCount =
         await this.attributeRepository.findAndCount(findOptions);
+
+      const pageTotal = Math.ceil(attrsAndCount[1] / realLimit);
 
       return {
         code: 200,
         success: true,
         message: 'Get Attributes successfully',
-        attributes: productCatsAndCount[0],
-        count: productCatsAndCount[1],
+        attributes: attrsAndCount[0],
+        count: attrsAndCount[1],
+        metaInfo: {
+          pageCurrent: page,
+          count: attrsAndCount[1],
+          pageTotal: pageTotal,
+        },
       };
     } catch (error) {
       return {
@@ -180,7 +189,7 @@ export class AttributeService {
     { req }: ContextType,
   ): Promise<DataMutationResponse> {
     try {
-      if (req.session.userId) {
+      if (!req.session.userId) {
         return {
           code: 401,
           success: false,

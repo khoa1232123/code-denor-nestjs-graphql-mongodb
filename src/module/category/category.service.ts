@@ -51,12 +51,19 @@ export class CategoryService {
 
       const catsAndCount = await this.catRepository.findAndCount(findOptions);
 
+      const pageTotal = Math.ceil(catsAndCount[1] / realLimit);
+
       return {
         code: 200,
         success: true,
         message: 'Get Categories successfully',
         categories: catsAndCount[0],
         count: catsAndCount[1],
+        metaInfo: {
+          pageCurrent: page,
+          count: catsAndCount[1],
+          pageTotal: pageTotal,
+        },
       };
     } catch (error) {
       return {
@@ -174,7 +181,7 @@ export class CategoryService {
     { req }: ContextType,
   ): Promise<DataMutationResponse> {
     try {
-      if (req.session.userId) {
+      if (!req.session.userId) {
         return {
           code: 401,
           success: false,
