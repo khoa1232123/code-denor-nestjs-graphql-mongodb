@@ -39,7 +39,7 @@ export class AttributeService {
     page = 1,
   }: GetAttributesInput): Promise<DataMutationResponse> {
     try {
-      const realLimit = Math.min(20, limit);
+      const realLimit = limit;
       console.log({ realLimit });
 
       const offset = (Number(page) - 1) * limit;
